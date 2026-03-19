@@ -3,6 +3,15 @@ export type ProjectLink = {
   href: string
 }
 
+export type ProjectMedia =
+  | string
+  | {
+      src: string
+      type?: 'image' | 'video'
+      poster?: string
+      label?: string
+    }
+
 export type Project = {
   slug: string
   title: string
@@ -10,15 +19,14 @@ export type Project = {
   category: string
   thumbnail: string
   summary: string
-  challenge: string
-  approach: string
-  impact: string[]
+  description: string
+  media: ProjectMedia[]
   stack: string[]
   links: ProjectLink[]
 }
 
 export const profile = {
-  name: 'Beriz Dautovic',
+  name: 'Beriz Dautović',
   role: 'ML Engineer',
   shortBio:
     'Data Science and AI student with extensive software development experience, focused on applying AI to solve meaningful problems.',
@@ -28,7 +36,7 @@ export type Education = {
   degree: string
   institution: string
   year: string
-  note: string
+  note?: string
 }
 
 export const education: Education[] = [
@@ -47,44 +55,39 @@ export const education: Education[] = [
 
 export const projects: Project[] = [
   {
-    slug: 'multilingual-support-copilot',
-    title: 'Multilingual Support Copilot',
+    slug: 'desqly',
+    title: 'Desk Reservation Platform',
     year: '2025',
-    category: 'LLM Orchestration',
-    thumbnail: '/thumbnails/llm-copilot.svg',
+    category: 'Web Application',
+    thumbnail: '/thumbnails/desqly.png',
     summary:
-      'AI assistant that triages, translates, and drafts support responses across 11 languages.',
-    challenge:
-      'Rising ticket volume and inconsistent quality in non-English responses caused slower SLAs.',
-    approach:
-      'Built retrieval-augmented routing with language detection, intent-aware prompts, and confidence gates for human handoff.',
-    impact: [
-      '34% reduction in first-response time',
-      'CSAT improved from 4.1 to 4.6',
-      '72% auto-draft acceptance by human agents',
+      'Fullstack web application for managing desk reservations with interactive floor plans.',
+    description:
+      'Desqly is a fullstack reservation platform designed for hybrid offices that need a simple way to coordinate shared desks and team seating. The application combines role-based access, user management, an interactive floor plan experience, and real-time booking so teams can reserve spaces confidently without overlap. I built the end-to-end product from authentication and API design to UI.',
+    media: [
+      '/thumbnails/desqly.png',
+      '/thumbnails/llm-copilot.svg',
+      '/thumbnails/vision-maintenance.svg',
     ],
-    stack: ['Python', 'FastAPI', 'LangGraph', 'PostgreSQL', 'Docker'],
+    stack: ['ReactJS', '.NET', 'PostgreSQL', 'Docker', 'Keycloak'],
     links: [
-      { label: 'Case Study', href: '#' },
-      { label: 'Architecture', href: '#' },
+      { label: 'Website', href: 'https://desqly.app/' },
     ],
   },
   {
     slug: 'predictive-maintenance-vision',
-    title: 'Predictive Maintenance Vision System',
-    year: '2024',
-    category: 'Computer Vision',
+    title: 'Prayer Times Table (Vaktija)',
+    year: '2025',
+    category: 'Android tvOS',
     thumbnail: '/thumbnails/vision-maintenance.svg',
     summary:
-      'Defect detection pipeline combining image embeddings and time-series telemetry for failure forecasting.',
-    challenge:
-      'Unplanned downtime was costly and rule-based alarms could not reliably detect early failure patterns.',
-    approach:
-      'Designed a two-stage model: visual anomaly scoring plus temporal risk forecasting, with drift monitoring and retraining.',
-    impact: [
-      '26% fewer unplanned maintenance events',
-      '18-day average early warning horizon',
-      'Reduced false alarms by 41%',
+      'Offline prayer times table app for mosques built with React Native for Android TV.',
+    description:
+      'This project focuses on reducing unplanned machine downtime by combining computer vision and temporal forecasting in a single monitoring workflow. The system ingests production-line imagery and telemetry streams, computes anomaly signals from visual features, and feeds them into a risk model that estimates short- and mid-term failure probability. I designed data preprocessing, model training, and deployment packaging for low-latency inference, then added drift checks and retraining triggers to keep quality stable as equipment behavior changed. The result is a practical maintenance assistant that surfaces early warnings with explainable indicators rather than opaque alarms.',
+    media: [
+      '/thumbnails/vision-maintenance.svg',
+      '/thumbnails/desqly.png',
+      '/thumbnails/fraud-ranking.svg',
     ],
     stack: ['PyTorch', 'OpenCV', 'ONNX Runtime', 'Kafka', 'Azure ML'],
     links: [
@@ -100,14 +103,12 @@ export const projects: Project[] = [
     thumbnail: '/thumbnails/fraud-ranking.svg',
     summary:
       'Low-latency risk-scoring service for payment streams with explainability traces for analysts.',
-    challenge:
-      'Batch models caught fraud too late, and analysts lacked transparent reasoning for high-risk decisions.',
-    approach:
-      'Implemented feature-store online inference, calibrated boosting models, SHAP reason codes, and active-learning feedback loops.',
-    impact: [
-      '17% increase in fraud capture rate',
-      'Decision latency below 90ms at p95',
-      'Review workload reduced by 23%',
+    description:
+      'The fraud ranking service was built to score transactions in real time and prioritize analyst review queues with clear decision evidence. I implemented a low-latency inference path backed by online features, calibrated risk outputs, and explanation payloads so investigators could quickly understand why a payment was flagged. The architecture supports continuous feedback collection from analyst actions, making it possible to retrain and improve the model without disrupting production throughput. The overall system balances detection performance and operational usability, which is critical in environments where false positives directly impact customer experience.',
+    media: [
+      '/thumbnails/fraud-ranking.svg',
+      '/thumbnails/clinical-nlp.svg',
+      '/thumbnails/llm-copilot.svg',
     ],
     stack: ['XGBoost', 'Redis', 'Feast', 'Kubernetes', 'Prometheus'],
     links: [
@@ -123,14 +124,12 @@ export const projects: Project[] = [
     thumbnail: '/thumbnails/clinical-nlp.svg',
     summary:
       'Transformer NLP pipeline extracting conditions, medications, and events from clinical notes.',
-    challenge:
-      'Highly unstructured medical notes made reliable downstream analysis difficult.',
-    approach:
-      'Fine-tuned domain models with weak supervision and ontology constraints, plus human-in-the-loop correction tooling.',
-    impact: [
-      '91% F1 on key entity extraction',
-      'Documentation abstraction time cut by 38%',
-      'Enabled near real-time reporting pipelines',
+    description:
+      'The clinical text structuring engine converts unstructured medical documentation into normalized, analysis-ready records for downstream reporting and decision support. I developed an NLP pipeline that combines transformer-based extraction with ontology-aware post-processing to capture entities such as conditions, medications, and clinically relevant events. To improve reliability in domain-specific language, the workflow includes weak supervision signals and a review interface that allows fast correction of uncertain outputs. This project demonstrates how machine learning can fit into healthcare data operations in a way that is measurable, maintainable, and sensitive to real-world documentation variability.',
+    media: [
+      '/thumbnails/clinical-nlp.svg',
+      '/thumbnails/vision-maintenance.svg',
+      '/thumbnails/fraud-ranking.svg',
     ],
     stack: ['Transformers', 'spaCy', 'Snorkel', 'Airflow', 'BigQuery'],
     links: [

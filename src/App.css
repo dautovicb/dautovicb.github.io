@@ -149,6 +149,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  margin-right: auto;
   color: var(--ink);
   text-decoration: none;
   border-bottom: 1px solid var(--ink);
@@ -287,6 +288,76 @@ h1 {
   transform: none;
 }
 
+.project-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.project-media {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.project-media-item {
+  margin: 0;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.72);
+  aspect-ratio: 16 / 10;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.project-media-item:hover,
+.project-media-item:focus-visible {
+  border-color: #c2b59f;
+  transform: translateY(-1px);
+}
+
+.project-media-item.is-active {
+  border-color: var(--accent);
+}
+
+.project-media-item .project-thumbnail {
+  transform: none;
+}
+
+.project-video-thumb {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+}
+
+.video-label {
+  color: #f9fafb;
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.video-badge {
+  position: absolute;
+  right: 0.45rem;
+  bottom: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  padding: 0.22rem 0.45rem;
+  color: #f9fafb;
+  background: rgba(17, 24, 39, 0.7);
+}
+
 .detail-grid {
   margin: 2rem 0 0;
   border-top: 1px solid var(--line);
@@ -312,9 +383,9 @@ h1 {
 .detail-grid dd {
   margin: 0;
   color: var(--ink);
+  line-height: 1.65;
 }
 
-.impact-list,
 .stack-list {
   list-style: none;
   margin: 0;
@@ -324,7 +395,6 @@ h1 {
   gap: 0.45rem;
 }
 
-.impact-list li,
 .stack-list li {
   border: 1px solid var(--line);
   padding: 0.35rem 0.55rem;
@@ -390,6 +460,10 @@ h1 {
   }
 
   .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-media {
     grid-template-columns: 1fr;
   }
 
