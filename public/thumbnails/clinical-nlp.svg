@@ -1,0 +1,23 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Clinical Text Structuring Engine Thumbnail</title>
+  <desc id="desc">Abstract typographic blocks and parsing lines for medical NLP.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1324"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <g stroke="#93c5fd" stroke-opacity="0.24" fill="none" stroke-width="2">
+    <rect x="120" y="120" width="960" height="480" rx="12"/>
+    <path d="M180 200h840M180 280h840M180 360h840M180 440h840M180 520h840"/>
+  </g>
+  <g fill="#e2e8f0" fill-opacity="0.9" font-family="monospace" font-size="42">
+    <text x="190" y="255">DX: Condition extraction pipeline</text>
+    <text x="190" y="335">MED: dosage and schedule parsing</text>
+    <text x="190" y="415">EVT: timeline sequence tagging</text>
+  </g>
+  <rect x="190" y="470" width="320" height="70" fill="#34d399" fill-opacity="0.24"/>
+  <rect x="530" y="470" width="260" height="70" fill="#f59e0b" fill-opacity="0.24"/>
+  <rect x="810" y="470" width="210" height="70" fill="#f43f5e" fill-opacity="0.24"/>
+</svg>

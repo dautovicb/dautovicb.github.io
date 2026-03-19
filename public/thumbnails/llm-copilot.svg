@@ -1,0 +1,26 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Multilingual Support Copilot Thumbnail</title>
+  <desc id="desc">Abstract geometric visualization for language AI orchestration.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <g stroke="#dbeafe" stroke-opacity="0.28" fill="none" stroke-width="2">
+    <path d="M120 110h220v170H120z"/>
+    <path d="M430 110h220v170H430z"/>
+    <path d="M740 110h220v170H740z"/>
+    <path d="M275 350h220v170H275z"/>
+    <path d="M585 350h220v170H585z"/>
+    <path d="M340 195h90"/>
+    <path d="M650 195h90"/>
+    <path d="M495 435h90"/>
+  </g>
+  <circle cx="120" cy="110" r="11" fill="#f97316"/>
+  <circle cx="430" cy="110" r="11" fill="#22d3ee"/>
+  <circle cx="740" cy="110" r="11" fill="#34d399"/>
+  <circle cx="275" cy="350" r="11" fill="#f472b6"/>
+  <circle cx="585" cy="350" r="11" fill="#facc15"/>
+</svg>
