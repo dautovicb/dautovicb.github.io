@@ -16,23 +16,28 @@ function inferMediaType(src: string): 'image' | 'video' {
   return VIDEO_EXTENSIONS.some((ext) => sourcePath.endsWith(ext)) ? 'video' : 'image'
 }
 
+function VideoStripThumb({ src }: { src: string }) {
+  return (
+    <video
+      src={src}
+      preload="metadata"
+      muted
+      className="media-strip-thumb"
+      onLoadedMetadata={(e) => {
+        ;(e.target as HTMLVideoElement).currentTime = 0.5
+      }}
+    />
+  )
+}
+
 function ProjectPage() {
   const { slug } = useParams()
   const project = projects.find((item) => item.slug === slug)
 
   const resolvedMedia = useMemo<ResolvedMediaItem[]>(() => {
-    if (!project) {
-      return []
-    }
-
+    if (!project) return []
     return project.media.map((item) => {
-      if (typeof item === 'string') {
-        return {
-          src: item,
-          type: inferMediaType(item),
-        }
-      }
-
+      if (typeof item === 'string') return { src: item, type: inferMediaType(item) }
       return {
         src: item.src,
         type: item.type ?? inferMediaType(item.src),
@@ -42,13 +47,25 @@ function ProjectPage() {
     })
   }, [project])
 
-  const [activeMediaIndex, setActiveMediaIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
-    setActiveMediaIndex(0)
+    setActiveIndex(0)
   }, [slug])
 
-  const activeMedia = resolvedMedia[activeMediaIndex]
+  useEffect(() => {
+    if (resolvedMedia.length < 2) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') setActiveIndex((i) => Math.max(0, i - 1))
+      if (e.key === 'ArrowRight') setActiveIndex((i) => Math.min(resolvedMedia.length - 1, i + 1))
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [resolvedMedia.length])
+
+  const activeMedia = resolvedMedia[activeIndex]
+  const canPrev = activeIndex > 0
+  const canNext = activeIndex < resolvedMedia.length - 1
 
   if (!project) {
     return (
@@ -61,9 +78,7 @@ function ProjectPage() {
           <section className="project-detail">
             <h1>Project not found</h1>
             <p className="lead">The project URL does not match any existing entry.</p>
-            <Link to="/" className="inline-link">
-              Back to project index
-            </Link>
+            <Link to="/" className="inline-link">Back to project index</Link>
           </section>
         </main>
       </div>
@@ -73,9 +88,7 @@ function ProjectPage() {
   return (
     <div className="site-shell">
       <header className="topbar">
-        <Link to="/" className="inline-link">
-          Project index
-        </Link>
+        <Link to="/" className="inline-link">Project index</Link>
         <p className="meta">{project.year}</p>
       </header>
 
@@ -85,70 +98,83 @@ function ProjectPage() {
           <h1 id="project-title">{project.title}</h1>
           <p className="lead">{project.summary}</p>
 
-          <div className="project-hero-media">
-            {activeMedia ? (
-              activeMedia.type === 'video' ? (
-                <video
-                  key={activeMedia.src}
-                  className="project-video"
-                  controls
-                  preload="metadata"
-                  poster={activeMedia.poster}
-                >
-                  <source src={activeMedia.src} />
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                <img
-                  src={activeMedia.src}
-                  alt={activeMedia.label ?? `${project.title} media ${activeMediaIndex + 1}`}
-                  className="project-thumbnail"
-                />
-              )
-            ) : (
-              <img
-                src={project.thumbnail}
-                alt={`${project.title} thumbnail`}
-                className="project-thumbnail"
-              />
-            )}
-          </div>
-
-          <section className="project-media" aria-label="Project media gallery">
-            {resolvedMedia.map((mediaItem, index) => (
-              <button
-                key={`${project.slug}-media-${index}`}
-                type="button"
-                className={`project-media-item ${activeMediaIndex === index ? 'is-active' : ''}`}
-                onClick={() => setActiveMediaIndex(index)}
-                aria-label={`Show ${mediaItem.type} ${index + 1}`}
-                aria-pressed={activeMediaIndex === index}
-              >
-                {mediaItem.type === 'video' ? (
-                  <div className="project-video-thumb" aria-hidden="true">
-                    {mediaItem.poster ? (
-                      <img
-                        src={mediaItem.poster}
-                        alt=""
-                        className="project-thumbnail"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <span className="video-label">Video</span>
-                    )}
-                    <span className="video-badge">Play</span>
-                  </div>
+          {resolvedMedia.length > 0 && (
+            <div className="media-gallery">
+              <div className="media-viewer">
+                {activeMedia.type === 'video' ? (
+                  <video
+                    key={activeMedia.src}
+                    className="media-main-video"
+                    controls
+                    preload="metadata"
+                    poster={activeMedia.poster}
+                  >
+                    <source src={activeMedia.src} />
+                  </video>
                 ) : (
                   <img
-                    src={mediaItem.src}
-                    alt={mediaItem.label ?? `${project.title} media ${index + 1}`}
-                    className="project-thumbnail"
-                    loading="lazy"
+                    key={activeMedia.src}
+                    src={activeMedia.src}
+                    alt={activeMedia.label ?? `${project.title} — ${activeIndex + 1}`}
+                    className="media-main-img"
                   />
                 )}
-              </button>
-            ))}
-          </section>
+
+                {resolvedMedia.length > 1 && (
+                  <>
+                    <button
+                      className="media-nav media-nav--prev"
+                      onClick={() => setActiveIndex((i) => i - 1)}
+                      disabled={!canPrev}
+                      aria-label="Previous"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      className="media-nav media-nav--next"
+                      onClick={() => setActiveIndex((i) => i + 1)}
+                      disabled={!canNext}
+                      aria-label="Next"
+                    >
+                      ›
+                    </button>
+                    <span className="media-counter">
+                      {activeIndex + 1} / {resolvedMedia.length}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {resolvedMedia.length > 1 && (
+                <div className="media-strip" role="tablist" aria-label="Media thumbnails">
+                  {resolvedMedia.map((item, index) => (
+                    <button
+                      key={index}
+                      role="tab"
+                      className={`media-strip-item${index === activeIndex ? ' is-active' : ''}`}
+                      onClick={() => setActiveIndex(index)}
+                      aria-label={`${item.type === 'video' ? 'Video' : 'Image'} ${index + 1}`}
+                      aria-selected={index === activeIndex}
+                    >
+                      {item.type === 'video' ? (
+                        <div className="media-strip-video-wrap">
+                          <VideoStripThumb src={item.src} />
+                          <span className="media-strip-play" aria-hidden="true">▶</span>
+                        </div>
+                      ) : (
+                        <img
+                          src={item.src}
+                          alt=""
+                          className="media-strip-thumb"
+                          loading="lazy"
+                        />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           <dl className="detail-grid">
             <div>
