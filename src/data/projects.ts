@@ -69,6 +69,9 @@ export const profile = {
   role: 'AI/ML Engineer',
   shortBio:
     'Data Science and AI student with extensive software development experience, focused on applying AI to solve meaningful problems.',
+  email: 'bdautovic2@etf.unsa.ba',
+  github: 'https://github.com/dautovicb',
+  linkedin: 'https://www.linkedin.com/in/beriz-dautović-60802a2a5',
 }
 
 export type Education = {
@@ -81,7 +84,7 @@ export type Education = {
 export const education: Education[] = [
   {
     degree: 'Data Science and Artificial Intelligence',
-    institution: 'ETF University of Sarajevo',
+    institution: 'Faculty of Electrical Engineering Sarajevo',
     year: '2025-2028',
   },
   {

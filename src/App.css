@@ -6,6 +6,7 @@
   box-shadow: 0 20px 55px rgba(0, 0, 0, 0.06);
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .site-shell::before {
@@ -21,16 +22,70 @@
   top: -5rem;
   right: -3rem;
   transform: rotate(22deg);
+  animation: sway 26s ease-in-out infinite alternate;
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(20deg) translate(0, 0);
+  }
+  to {
+    transform: rotate(26deg) translate(-0.7rem, 0.6rem);
+  }
+}
+
+
+
+@keyframes shellGlow {
+  from {
+    transform: translate(-4%, -3%) scale(1);
+  }
+  to {
+    transform: translate(5%, 6%) scale(1.08);
+  }
+}
+
+/* Drifting line particles — fixed in the page background, behind all content */
+.particle-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .topbar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: right;
   align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
   padding: 1.1rem 1.5rem;
   border-bottom: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(2px);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  transition: color 0.2s var(--ease);
+}
+
+.wordmark:hover,
+.wordmark:focus-visible {
+  color: var(--accent);
+}
+
+.wordmark-dot {
+  color: var(--accent);
 }
 
 .social-links {
@@ -92,15 +147,12 @@ main {
 }
 
 .hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr);
-  gap: 2.4rem;
-  align-items: start;
   padding: 0.75rem 0 2rem;
+  animation: fadeUp 0.7s var(--ease) both;
 }
 
 h1 {
-  margin: 0.7rem 0 1rem;
+  margin: 0.35rem 0 1rem;
   font-size: clamp(2rem, 5vw, 3.9rem);
   font-weight: 500;
   line-height: 0.93;
@@ -108,6 +160,19 @@ h1 {
   max-width: 18ch;
   color: var(--ink);
   text-wrap: balance;
+}
+
+/* Keep the magnetic name on a single line — the inline-block letters would
+   otherwise wrap anywhere the line fills up. */
+.hero-name {
+  white-space: nowrap;
+  max-width: none;
+}
+
+/* Per-letter spans for the magnetic hero name */
+.hero-letter {
+  display: inline-block;
+  will-change: transform;
 }
 
 .lead {
@@ -126,18 +191,49 @@ h1 {
   font-weight: 500;
 }
 
-.hero-note {
-  border-left: 1px solid var(--line);
-  padding-left: 1rem;
+.hero-now {
   display: flex;
-  align-items: center;
-  min-height: 100%;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin: 0.95rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
 
-.hero-note p {
-  margin: 0;
-  color: var(--ink);
-  font-size: 0.99rem;
+.hero-now-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+  color: var(--accent);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.hero-now-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: nowPulse 2s ease-in-out infinite;
+}
+
+.hero-now-text::before {
+  content: '— ';
+}
+
+@keyframes nowPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
 }
 
 .section-label {
@@ -165,7 +261,7 @@ h1 {
 }
 
 .projects-panel {
-  margin-top: 1.4rem;
+  margin-top: 0.4rem;
 }
 
 .projects-header {
@@ -178,9 +274,31 @@ h1 {
 }
 
 .projects-header h2 {
+  position: relative;
   margin: 0;
+  padding-left: 0.85rem;
   color: var(--ink);
   font-size: 1.2rem;
+}
+
+.projects-header h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  bottom: 0.18em;
+  width: 3px;
+  background: var(--accent);
+}
+
+.projects-count {
+  margin-left: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  vertical-align: middle;
 }
 
 .projects-header p {
@@ -204,16 +322,23 @@ h1 {
   flex-direction: column;
   padding: 0.55rem;
   gap: 0.78rem;
-  opacity: 0;
-  transform: translateY(16px);
-  animation: reveal 0.58s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  transition: transform 0.26s ease, box-shadow 0.26s ease, border-color 0.26s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease),
+    border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
 
 .project-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(17, 24, 39, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 34px rgba(17, 24, 39, 0.14);
   border-color: #c2b59f;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.project-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .thumbnail-wrap {
@@ -229,12 +354,31 @@ h1 {
   height: 100%;
   object-fit: cover;
   display: block;
-  transform: scale(1.01);
-  transition: transform 0.55s ease;
 }
 
-.project-card:hover .project-thumbnail {
-  transform: scale(1.06);
+/* Warm monochrome thumbnails — applied on all devices, revealed on interaction. */
+.project-thumbnail {
+  filter: grayscale(0.5) contrast(1.05) brightness(1.05) sepia(0.4);
+  transition: filter 0.35s ease;
+}
+
+/* Hover reveal on pointer devices */
+@media (hover: hover) {
+  .project-card:hover .project-thumbnail,
+  .project-card:focus-within .project-thumbnail {
+    filter: none;
+  }
+}
+
+/* Tap reveal on touch devices */
+.project-card:active .project-thumbnail {
+  filter: none;
+}
+
+/* Scroll-focus reveal: the card nearest the viewport centre (single-column
+   layout only — see the scroll handler in HomePage). */
+.project-card.is-focused .project-thumbnail {
+  filter: none;
 }
 
 .project-main h3 {
@@ -251,12 +395,26 @@ h1 {
   gap: 0.8rem;
 }
 
+.project-index {
+  color: var(--accent);
+}
+
+.project-index::after {
+  content: '/';
+  margin-left: 0.55rem;
+  color: var(--ink-muted);
+}
+
 .project-summary {
   margin: 0;
   color: var(--ink-muted);
 }
 
 .project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
   text-decoration: none;
   color: var(--ink);
   font-family: var(--mono);
@@ -265,11 +423,21 @@ h1 {
   text-transform: uppercase;
   margin-top: auto;
   padding: 0.2rem 0;
+  transition: color 0.2s var(--ease);
 }
 
-.project-link:hover,
-.project-link:focus-visible {
+.project-card:hover .project-link,
+.project-card:focus-visible .project-link {
   color: var(--accent);
+}
+
+.project-link-arrow {
+  transition: transform 0.25s var(--ease);
+}
+
+.project-card:hover .project-link-arrow,
+.project-card:focus-visible .project-link-arrow {
+  transform: translateX(4px);
 }
 
 .project-detail {
@@ -299,6 +467,7 @@ h1 {
   width: auto;
   height: auto;
   object-fit: contain;
+  animation: mediaFade 0.4s var(--ease);
 }
 
 .media-main-video {
@@ -308,6 +477,7 @@ h1 {
   width: 100%;
   height: auto;
   background: #0f172a;
+  animation: mediaFade 0.4s var(--ease);
 }
 
 .media-nav {
@@ -335,6 +505,10 @@ h1 {
 
 .media-nav:not(:disabled):hover {
   background: rgba(15, 23, 42, 0.9);
+}
+
+.media-nav:not(:disabled):active {
+  transform: translateY(-50%) scale(0.92);
 }
 
 .media-nav--prev { left: 0.6rem; }
@@ -414,7 +588,6 @@ h1 {
 
 .detail-grid {
   margin: 2rem 0 0;
-  border-top: 1px solid var(--line);
 }
 
 .detail-grid > div {
@@ -422,7 +595,7 @@ h1 {
   grid-template-columns: 180px 1fr;
   gap: 1rem;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--line);
 }
 
 .detail-grid dt {
@@ -455,6 +628,13 @@ h1 {
   padding: 0.35rem 0.55rem;
   font-size: 0.88rem;
   background: rgba(255, 255, 255, 0.75);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.stack-list li:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
 }
 
 .detail-links {
@@ -486,6 +666,11 @@ h1 {
   color: var(--ink);
 }
 
+/* Keep the year (first span) on one line so it doesn't wrap mid-date */
+.education-list .project-meta > span:first-child {
+  white-space: nowrap;
+}
+
 @media (max-width: 960px) {
   .site-shell {
     width: min(1080px, 100% - 1rem);
@@ -499,14 +684,6 @@ h1 {
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 1.4rem;
-  }
-
-  .hero-note {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-    padding-left: 0;
-    padding-top: 0.85rem;
-    min-height: auto;
   }
 
   .projects-header {
@@ -526,14 +703,27 @@ h1 {
 
 @media (prefers-reduced-motion: reduce) {
   .project-card,
-  .project-detail {
-    animation: none;
-    opacity: 1;
-    transform: none;
+  .project-detail,
+  .hero-grid {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
-  .project-thumbnail {
+  .project-thumbnail,
+  .media-main-img,
+  .media-main-video {
     transition: none;
+    animation: none;
+  }
+
+  body::before,
+  body::after,
+  .site-shell::before,
+  .site-shell::after,
+  .hero-now-dot {
+    animation: none !important;
   }
 }
 
@@ -541,5 +731,94 @@ h1 {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes mediaFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 0.5rem;
+  padding: 1.6rem;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.footer-cta-label {
+  margin: 0 0 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.footer-mail {
+  font-size: clamp(1.1rem, 3vw, 1.55rem);
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  padding-bottom: 0.15rem;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.35s var(--ease), color 0.2s var(--ease);
+}
+
+.footer-mail:hover,
+.footer-mail:focus-visible {
+  color: var(--accent);
+  background-size: 100% 1px;
+}
+
+.footer-bottom {
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 520px) {
+  .social-link span {
+    display: none;
+  }
+
+  .social-link {
+    padding: 0.42rem 0.5rem;
   }
 }

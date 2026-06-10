@@ -11,10 +11,15 @@
   --accent-soft: #efd7cb;
   --sans: 'Space Grotesk', 'Segoe UI', sans-serif;
   --mono: 'IBM Plex Mono', 'Consolas', monospace;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -23,21 +28,76 @@ body,
   min-height: 100%;
 }
 
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
 body {
   margin: 0;
   font-family: var(--sans);
   font-size: 17px;
   line-height: 1.55;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 8% 14%, rgba(182, 58, 45, 0.13), transparent 30%),
-    radial-gradient(circle at 90% 88%, rgba(255, 255, 255, 0.48), transparent 35%),
-    var(--bg);
+  background: var(--bg);
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Ambient drifting glows — kept very subtle, mostly visible in the margins */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+body::before {
+  width: 42vmax;
+  height: 42vmax;
+  top: -12vmax;
+  left: -12vmax;
+  background: radial-gradient(circle, rgba(182, 58, 45, 0.18), transparent 70%);
+  animation: drift-a 24s ease-in-out infinite alternate;
+}
+
+body::after {
+  width: 38vmax;
+  height: 38vmax;
+  right: -12vmax;
+  bottom: -12vmax;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.65), transparent 70%);
+  animation: drift-b 30s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(8vmax, 6vmax) scale(1.12);
+  }
+}
+
+@keyframes drift-b {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-8vmax, -5vmax) scale(1.12);
+  }
+}
+
 a {
   color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

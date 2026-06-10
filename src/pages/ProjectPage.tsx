@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { projects } from '../data/projects'
+import { Footer } from '../components/Footer'
 
 type ResolvedMediaItem = {
   src: string
@@ -48,10 +49,13 @@ function ProjectPage() {
   }, [project])
 
   const [activeIndex, setActiveIndex] = useState(0)
+  const [prevSlug, setPrevSlug] = useState(slug)
 
-  useEffect(() => {
+  // Reset the gallery to the first item when navigating to a different project.
+  if (slug !== prevSlug) {
+    setPrevSlug(slug)
     setActiveIndex(0)
-  }, [slug])
+  }
 
   useEffect(() => {
     if (resolvedMedia.length < 2) return
@@ -81,6 +85,7 @@ function ProjectPage() {
             <Link to="/" className="inline-link">Back to project index</Link>
           </section>
         </main>
+        <Footer />
       </div>
     )
   }
@@ -191,17 +196,19 @@ function ProjectPage() {
                 </ul>
               </dd>
             </div>
-          </dl>
-
-          <div className="detail-links" aria-label="Project links">
+            <div className="detail-links" aria-label="Project links">
             {project.links.map((entry) => (
               <a key={entry.label} href={entry.href} className="inline-link">
                 {entry.label}
               </a>
             ))}
           </div>
+          </dl>
+
+          
         </section>
       </main>
+      <Footer />
     </div>
   )
 }
