@@ -1,103 +1,110 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap');
-
 :root {
-  --bg: #ece7dd;
-  --paper: #fbfaf6;
-  --line: #d2c7b8;
-  --line-soft: #e5ddce;
-  --ink: #181614;
-  --ink-muted: #5d554b;
-  --accent: #b63a2d;
-  --accent-soft: #efd7cb;
-  --sans: 'Space Grotesk', 'Segoe UI', sans-serif;
-  --mono: 'IBM Plex Mono', 'Consolas', monospace;
-  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --bg: #f4f1ea;
+  --ink: #1f1b16;
+  --soft: #6f6457;
+  --faint: #a89c8a;
+  --red: #c4322b;
+  --line: rgba(31, 27, 22, 0.12);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
-
-html,
-body,
-#root {
-  min-height: 100%;
-}
-
-::selection {
-  background: var(--accent-soft);
-  color: var(--ink);
-}
-
-body {
+html, body {
   margin: 0;
-  font-family: var(--sans);
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--ink);
+  padding: 0;
   background: var(--bg);
-  text-rendering: geometricPrecision;
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Ambient drifting glows — kept very subtle, mostly visible in the margins */
-body::before,
-body::after {
-  content: '';
-  position: fixed;
-  z-index: -1;
-  pointer-events: none;
-  border-radius: 50%;
-  will-change: transform;
+::selection { background: var(--red); color: #fff; }
+
+a { color: inherit; }
+
+.site { min-height: 100vh; display: flex; flex-direction: column; }
+
+.site-nav {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+.site-nav-links a { text-decoration: none; }
+.site-nav-links a:hover { color: var(--red); }
+.site-building { display: inline-flex; align-items: center; gap: 7px; }
+.site-building-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--red);
+  animation: site-pulse 1.8s ease-in-out infinite;
 }
 
-body::before {
-  width: 42vmax;
-  height: 42vmax;
-  top: -12vmax;
-  left: -12vmax;
-  background: radial-gradient(circle, rgba(182, 58, 45, 0.18), transparent 70%);
-  animation: drift-a 24s ease-in-out infinite alternate;
+.site-hero {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 64px 24px 72px;
+}
+.site-hero-eyebrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--faint); margin: 0 0 20px;
+}
+.site-hero-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(32px, 5.5vw, 56px);
+  font-weight: 500; line-height: 1.06; letter-spacing: -0.02em;
+  margin: 0 0 22px; max-width: 18ch;
+}
+.site-hero-sub {
+  font-size: 17px; line-height: 1.6; color: var(--soft);
+  margin: 0; max-width: 52ch;
 }
 
-body::after {
-  width: 38vmax;
-  height: 38vmax;
-  right: -12vmax;
-  bottom: -12vmax;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.65), transparent 70%);
-  animation: drift-b 30s ease-in-out infinite alternate;
+main { padding-bottom: 96px; }
+
+.site-footer {
+  margin-top: auto;
+  max-width: 1080px; width: 100%; margin-left: auto; margin-right: auto;
+  padding: 28px 24px 40px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px; letter-spacing: 0.06em; color: var(--faint);
 }
 
-@keyframes drift-a {
-  from {
-    transform: translate(0, 0) scale(1);
-  }
-  to {
-    transform: translate(8vmax, 6vmax) scale(1.12);
-  }
-}
-
-@keyframes drift-b {
-  from {
-    transform: translate(0, 0) scale(1);
-  }
-  to {
-    transform: translate(-8vmax, -5vmax) scale(1.12);
-  }
-}
-
-a {
+.site-footer a {
   color: inherit;
+  text-decoration: none;
 }
 
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+@keyframes site-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.82); }
+}
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  .site-building-dot { animation: none; }
 }

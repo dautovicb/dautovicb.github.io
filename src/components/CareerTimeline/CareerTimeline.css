@@ -1,0 +1,141 @@
+.ct-root {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 10px 24px 0;
+  color: var(--ink, #1f1b16);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.ct-eyebrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--faint, #a89c8a);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+.ct-eyebrow::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line, rgba(31,27,22,0.12));
+}
+
+.ct-entries {
+  display: flex;
+  flex-direction: column;
+}
+
+.ct-node {
+  display: flex;
+  align-items: stretch;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.ct-node.ct-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ct-year-aside {
+  width: 112px;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 20px;
+  padding-top: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ct-year {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: -0.01em;
+  color: var(--ink, #1f1b16);
+}
+.ct-age {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--faint, #a89c8a);
+}
+
+.ct-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 18px;
+}
+.ct-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--red, #c4322b);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.ct-vline {
+  width: 1px;
+  flex: 1;
+  background: var(--line, rgba(31,27,22,0.12));
+  min-height: 20px;
+  margin-top: 7px;
+}
+
+.ct-content {
+  flex: 1;
+  padding-left: 22px;
+  padding-bottom: 44px;
+}
+.ct-node:last-child .ct-content {
+  padding-bottom: 0;
+}
+
+.ct-domain {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--ink, #1f1b16);
+  margin-bottom: 7px;
+}
+
+.ct-artifact {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--red, #c4322b);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+  transition: opacity 0.15s ease;
+}
+.ct-artifact:hover { opacity: 0.65; }
+
+.ct-note {
+  font-size: 15px;
+  line-height: 1.62;
+  color: var(--soft, #6f6457);
+  margin: 0;
+  max-width: 54ch;
+}
+
+@media (max-width: 620px) {
+  .ct-root { padding: 72px 18px 0; }
+  .ct-year-aside { width: 78px; padding-right: 14px; }
+  .ct-content { padding-left: 16px; padding-bottom: 36px; }
+  .ct-domain { font-size: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-node { transition: none; opacity: 1; transform: none; }
+}
