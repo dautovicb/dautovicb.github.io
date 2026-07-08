@@ -329,7 +329,7 @@
   object-fit: cover;
 }
 .mg-panel-thumb-asset-image {
-  background: #f0ede6;
+  background: #000;
 }
 .mg-panel-thumb-asset-video {
   background: #000;
@@ -403,25 +403,11 @@
   object-fit: cover;
 }
 .mg-media-asset-image {
-  background: #f0ede6;
+  background: #000;
 }
 .mg-media-asset-video {
   background: #000;
 }
-.mg-media-cell-label {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 4px 7px;
-  background: rgba(31, 27, 22, .55);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 9px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.85);
-}
-
 /* Media viewer */
 .mg-media-viewer {
   position: fixed;
@@ -462,7 +448,24 @@
   letter-spacing: .12em;
   text-transform: uppercase;
   color: rgba(255,255,255,.82);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+.mg-media-viewer-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.mg-media-viewer-counter {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.5);
+}
+.mg-media-viewer-zoom-reset,
 .mg-media-viewer-close {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 11px;
@@ -474,18 +477,84 @@
   border-radius: 3px;
   padding: 5px 10px;
   cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s ease, border-color .15s ease;
 }
+.mg-media-viewer-zoom-reset:hover,
 .mg-media-viewer-close:hover {
   color: #fff;
   border-color: rgba(255,255,255,.32);
 }
-.mg-media-viewer-asset {
+.mg-media-viewer-zoom-reset:hover {
+  color: var(--mg-red);
+  border-color: var(--mg-red);
+}
+
+/* Pannable / zoomable stage */
+.mg-media-viewer-stage {
+  position: relative;
   width: 100%;
   height: min(78vh, 820px);
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+.mg-media-viewer-stage-locked {
+  touch-action: none;
+}
+.mg-media-viewer-asset {
+  width: 100%;
+  height: 100%;
   display: block;
   object-fit: contain;
-  background: #111;
 }
+.mg-media-viewer-asset-image {
+  background: #000;
+  -webkit-user-drag: none;
+  user-select: none;
+  transform-origin: center center;
+  will-change: transform;
+}
+.mg-media-viewer-asset-video {
+  background: #000;
+}
+.mg-media-viewer-asset-zoomable { cursor: zoom-in; }
+.mg-media-viewer-asset-grab { cursor: grab; }
+.mg-media-viewer-asset-grabbing { cursor: grabbing; }
+.mg-media-viewer-asset-animate {
+  transition: transform .26s cubic-bezier(.22, .61, .36, 1), opacity .26s ease;
+}
+
+/* Prev / next chevrons */
+.mg-media-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(17, 17, 17, .55);
+  border: 1px solid rgba(255,255,255,.18);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
+}
+.mg-media-nav:hover {
+  color: var(--mg-red);
+  border-color: var(--mg-red);
+  background: rgba(17, 17, 17, .75);
+}
+.mg-media-nav-prev { left: 12px; }
+.mg-media-nav-next { right: 12px; }
 
 @media (max-width: 600px) {
   .mg-media-grid {
@@ -498,9 +567,26 @@
     width: calc(100vw - 24px);
     max-height: calc(100vh - 24px);
   }
-  .mg-media-viewer-asset {
+  .mg-media-viewer-stage {
     height: min(70vh, 70vh);
   }
+  .mg-media-viewer-bar {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .mg-media-viewer-bar-actions { gap: 7px; }
+  .mg-media-viewer-zoom-reset,
+  .mg-media-viewer-close {
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+  .mg-media-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  .mg-media-nav-prev { left: 6px; }
+  .mg-media-nav-next { right: 6px; }
 }
 
 /* Panel body */
@@ -660,4 +746,5 @@
 @media (prefers-reduced-motion: reduce) {
   .mg-overlay, .mg-panel, .mg-gallery { animation: none; }
   .mg-card, .mg-filter { transition: none; }
+  .mg-media-viewer-asset-animate { transition: none; }
 }

@@ -51,7 +51,6 @@
   align-items: center;
   width: max-content;
   gap: 0;
-  will-change: transform;
   animation: ts-marquee var(--ts-duration, 34s) linear infinite;
 }
 

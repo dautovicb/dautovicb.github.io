@@ -170,7 +170,7 @@ const projects = [
   },
   {
     id: "freelance-gamedev",
-    year: 2024,
+    year: 2022,
     role: "game development",
     categories: ["gamedev"],
     name: "Freelance Games",
@@ -182,90 +182,7 @@ const projects = [
       "A collection of games built for clients and independent release, showcasing a strong foundation in software engineering principles and performance optimization. This portfolio demonstrates an ability to take ambiguous concepts and ship production-ready, highly optimized code across the full development lifecycle. \n\nKey Engineering & Technical Achievements\n • Object-Oriented Design & Architecture: Engineered scalable, decoupled codebases using design patterns to manage complex game loops, UI states, and event systems.\n\n • Performance Optimization: Profiled and optimized memory management, object pooling, and rendering pipelines to maintain stable frame rates (60+ FPS) across target platforms.\n\n • Resourcefulness & Shipping: Managed full-lifecycle development - from initial logic prototyping to final deployment and bug tracking.",
     media: globToMedia(freelance),
     problems: [
-    ],
-  },
-  /*
-  {
-    id: "seatreasuredefense",
-    year: 2023,
-    role: "game development",
-    categories: ["gamedev"],
-    name: "guardian of the treasure",
-    tagline: "A sea-themed tower defense game, delivered for a client in hours.",
-    status: "shipped",
-    tech: ["Unity", "C#", "Blender"],
-    links: [],
-    description:
-      "Built for a client on Upwork as a rapid prototype to anchor a larger project. A tower defense game where you place different tower types to defend a treasure from waves of sea enemies. Delivered as a functional, polished starting point under a tight deadline.",
-    media: globToMedia(seatreasuredefense),
-    problems: [
-      {
-        q: "How do you design a wave system that scales difficulty without feeling arbitrary?",
-        a: "Parameterised each wave as a budget — total enemy health points — allocated across enemy types via a weighted distribution that shifts toward tougher variants as rounds increase. The designer tunes the budget curve, not individual waves, which makes scaling predictable and the difficulty feel earned.",
-      },
-      {
-        q: "How do you deliver a complete, presentable game prototype in a matter of hours?",
-        a: "Scoped ruthlessly to the one mechanic the client needed validated — tower placement and enemy pathing — and used Unity's asset store for everything visual. All code time went to the systems, not the scaffolding.",
-      },
-    ],
-  },
-  
-  {
-    id: "projectalpha",
-    year: 2025,
-    role: "game development",
-    categories: ["gamedev"],
-    name: "project alpha",
-    tagline: "A desktop fitness companion with real-time body transformation via Blend Shapes.",
-    status: "shipped",
-    tech: ["Unity", "C#", "Blender", "Windows API"],
-    links: [],
-    description:
-      "Project Alpha lives in the corner of your desktop while you work. It visualises weight-loss progress in real time, continuously morphing a 3D character as you log progress. The most technically interesting part was engineering a borderless, transparent, always-on-top window by dropping into native Windows APIs from within Unity.",
-    media: globToMedia(projectalpha),
-    problems: [
-      {
-        q: "How do you drive continuous body shape transformation in real time?",
-        a: "Made two models with the same bone structure - one fit and the other fat. Used blend shapes to smoothly transition from one to the other over time.",
-      },
-    ],
-  },
-  {
-    id: "endlessrunner",
-    year: 2024,
-    role: "game development",
-    categories: ["gamedev"],
-    name: "endless runners",
-    tagline: "Multiple endless runner games for a client.",
-    status: "shipped",
-    tech: ["Unity", "C#"],
-    thumbnail: null,
-    links: [],
-    description:
-      "Developed a highly reusable core codebase to rapidly deploy mechanics, procedural obstacle generation, and state management across multiple titles. Focused heavily on memory optimization and garbage collection management in Unity to ensure a locked 60 FPS across low-end mobile devices.",
-    media: globToMedia(endlessrunner),
-    problems: [
-    ],
-  },
-  
-  {
-    id: "bakery",
-    year: 2024,
-    role: "game development",
-    categories: ["gamedev"],
-    name: "bakery",
-    tagline: "Multiple endless runner games for a client.",
-    status: "shipped",
-    tech: ["Unity", "C#"],
-    thumbnail: null,
-    links: [],
-    description:
-      "Developed a highly reusable core codebase to rapidly deploy mechanics, procedural obstacle generation, and state management across multiple titles. Focused heavily on memory optimization and garbage collection management in Unity to ensure a locked 60 FPS across low-end mobile devices.",
-    media: globToMedia(bakery),
-    problems: [
-    ],
-  },
-  */
+    ],},
 ];
 
 export default projects;

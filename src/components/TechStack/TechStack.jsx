@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./TechStack.css";
 
 const groups = [
@@ -41,6 +42,30 @@ function TickerRow({ label, items, speed }) {
 }
 
 export default function TechStack() {
+  // On touch devices, opening a portfolio case study (full-screen backdrop-filter
+  // overlay + locked body scroll) can leave this marquee's CSS animation dead — it
+  // stays frozen until a full page reload. When body scroll unlocks again, bump a
+  // key so the rows remount and their animation starts fresh. Gated to coarse
+  // pointers so desktop, which never freezes, doesn't jump to start on every close.
+  const [restartKey, setRestartKey] = useState(0);
+
+  useEffect(() => {
+    const coarse = window.matchMedia?.("(pointer: coarse)")?.matches;
+    if (!coarse) return;
+
+    const body = document.body;
+    let wasLocked = body.style.overflow === "hidden";
+
+    const observer = new MutationObserver(() => {
+      const locked = body.style.overflow === "hidden";
+      if (wasLocked && !locked) setRestartKey((k) => k + 1);
+      wasLocked = locked;
+    });
+
+    observer.observe(body, { attributes: true, attributeFilter: ["style"] });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="ts-root" aria-label="Tech stack">
       <h2 className="ts-heading">
@@ -50,7 +75,7 @@ export default function TechStack() {
       <div className="ts-list">
         {groups.map((group) => (
           <TickerRow
-            key={group.label}
+            key={`${group.label}-${restartKey}`}
             label={group.label}
             items={group.items}
             speed={group.speed}
