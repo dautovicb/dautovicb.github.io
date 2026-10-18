@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy | Consciousness: Dimensions</title>
+    <meta name="description" content="Privacy information for Consciousness: Dimensions, an iOS puzzle adventure by Beriz Dautović, including App Store purchases and privacy contact details." />
+    <link rel="canonical" href="https://dautovicb.github.io/consciousness-privacy-policy" />
+    <link rel="stylesheet" href="/src/index.css" />
+    <link rel="stylesheet" href="/src/privacy-policy.css" />
+  </head>
+  <body class="privacy-page">
+    <div class="site">
+      <header class="site-nav">
+        <nav class="site-nav-links" aria-label="Portfolio">
+          <a href="/">&larr; Back to portfolio</a>
+        </nav>
+      </header>
+
+      <main id="main-content" class="privacy-main">
+        <article aria-labelledby="policy-title">
+          <header class="privacy-header">
+            <p class="privacy-eyebrow">Consciousness: Dimensions · Apple iOS</p>
+            <h1 id="policy-title">Privacy Policy</h1>
+            <p class="privacy-byline">Developed by Beriz Dautović</p>
+            <p class="privacy-byline">Effective Date: October 18, 2026</p>
+          </header>
+
+          <section aria-labelledby="introduction">
+            <h2 id="introduction">1. Introduction</h2>
+            <p>TThis Privacy Policy describes how information may be processed when you use Consciousness: Dimensions, a single-player puzzle adventure for Apple iOS developed by Beriz Dautović (“the developer”).</p>
+            <p>The game offers a free portion and an optional one-time in-app purchase that unlocks the full game.</p>
+            <p>TThis policy applies to the game and its integrated services. It does not describe the privacy practices of the developer’s portfolio website or Apple’s services generally.</p>
+          </section>
+
+          <section aria-labelledby="information">
+            <h2 id="information">2. Information We Collect</h2>
+            <p><strong>Local game data.</strong> The game stores certain information locally on your device to support gameplay and functionality. This may include level progress, navigation state, introductory sequences, campaign progression flags, and full-game unlock status.</p>
+            <p>The game uses Unity PlayerPrefs for these values. This local storage is not encrypted by the game.</p>
+            <p><strong>Purchase-related information and technical data.</strong> The integrated Unity In-App Purchasing SDK contains active telemetry paths that send purchase intent, successful payment, failure, and fulfillment events to Unity. Depending on the event and information available, payloads include:</p>
+            <ul>
+              <li>Product identifiers, quantity, price, currency, transaction identifiers, and purchase failure details.</li>
+              <li>Apple receipts or signed transaction data, original transaction identifiers, ownership type, and an app account token when supplied by StoreKit.</li>
+              <li>The iOS identifier for vendor (IDFV), device model, operating system, language and locale, boot time, disk capacity, installation timestamp, and app and SDK versions.</li>
+              <li>Installation, session, project, and user identifiers where available.</li>
+            </ul>
+            <p>The SDK also contains a service-configuration request that can send project and installation identifiers, version details, and platform information when the required components are available. These paths support purchase reporting and service configuration. Their exact runtime behavior and any further uses by Unity remain subject to verification.</p>
+            <p><strong>Analytics.</strong> Unity Analytics is configured to initialize at startup. No custom gameplay analytics events are configured.</p>
+            <p><strong>Advertising, tracking, and diagnostics.</strong> Game does not display advertisements or use advertising services.</p>
+            
+            <p><strong>Support correspondence.</strong> If you email the developer, your message includes your email address and any information you choose to provide. Please avoid sending sensitive information that is unnecessary for your request.</p>
+          </section>
+
+          <section aria-labelledby="purchases">
+            <h2 id="purchases">3. In-App Purchases</h2>
+            <p>The full-game unlock is an optional, one-time, non-consumable purchase processed through Apple’s App Store using Unity In-App Purchasing. Apple handles payment processing under its own terms and privacy practices. See <a href="https://www.apple.com/legal/privacy/data/en/app-store/">App Store &amp; Privacy</a>.</p>
+            <p>The game automatically connects to the purchase service and retrieves product information and previous purchases from the menu. It checks ownership and saves a local flag to enable access to the full game.</p>
+            <p>The game scripts do not explicitly save raw receipts or transaction identifiers, operate a receipt-validation backend, or access payment-card details or Apple Account credentials. The purchase SDK nevertheless accesses and transmits purchase-related and technical information as described above, and maintains local transaction records. Apple’s payment processing does not prevent this SDK collection.</p>
+
+          </section>
+
+          <section aria-labelledby="services">
+            <h2 id="services">4. Third-Party Services</h2>
+            <p><strong>Apple.</strong> Apple distributes the game and processes App Store purchases under its own policies, including the <a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a>.</p>
+            <p><strong>Unity.</strong> The game uses the Unity engine, Unity In-App Purchasing, and Unity service components. The implementation includes Unity IAP 5.4.4 and startup analytics settings. Purchase telemetry is directed to Unity Insights services. See Unity’s <a href="https://docs.unity.com/en-us/iap/privacy-and-consent/overview">IAP privacy documentation</a> and <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy">Game Player and App User Privacy Policy</a> for its data-handling information.</p>
+            <p>No custom backend, account login, or cloud-save implementation is implemented.</p>
+      
+          </section>
+
+          <section aria-labelledby="storage">
+            <h2 id="storage">5. Data Storage and Security</h2>
+            <p>Game progress, settings, and the full-game ownership flag are stored locally using Unity PlayerPrefs, which is unencrypted local preference storage. No custom runtime save-file system or cloud synchronization.</p>
+            <p>SDK code also supports persistent installation identifiers and session preferences. Unity IAP maintains transaction deduplication records using hashed transaction identifiers in its local purchasing directory.</p>
+            <p>Information sent to Unity or Apple is processed outside the game’s local storage. Deleting local game data does not by itself establish that information held by these providers has been deleted.</p>
+            <p>You can contact the developer below with questions or requests concerning access to or deletion of information relating to you.</p>
+        
+          </section>
+
+          <section aria-labelledby="storage">
+            <h2 id="storage">6. Children's Privacy</h2>
+            <p>The game's intended age audience and any age-specific privacy arrangements should be assessed in conjunction with its App Store age rating and release configuration.</p>
+            <p>The game integrates third-party services that may process purchase-related and technical information as described in this policy. The developer does not claim that all such processing excludes information relating to children.</p>
+            <p>Parents or guardians who have questions about privacy in Consciousness: Dimensions may contact the developer using the details below.</p>
+          </section>
+
+
+          <section aria-labelledby="changes">
+            <h2 id="changes">7. Changes to This Privacy Policy</h2>
+            <p>This policy may be updated as the game or its privacy practices change. The current version will be available on this page.</p>
+           
+          </section>
+
+          <section aria-labelledby="contact">
+            <h2 id="contact">8. Contact Information</h2>
+         
+            <p>For privacy questions about Consciousness: Dimensions, contact:</p>
+            <address>
+              Beriz Dautović<br />
+              <a href="mailto:bdautovic2@etf.unsa.ba">bdautovic2@etf.unsa.ba</a>
+            </address>
+          </section>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <a href="/">Beriz Dautović · Portfolio</a>
+      </footer>
+    </div>
+  </body>
+</html>
