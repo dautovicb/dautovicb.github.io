@@ -10,6 +10,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         portfolio: fileURLToPath(new URL("./index.html", import.meta.url)),
+        bakeItBigPrivacy: fileURLToPath(new URL("./bake-it-big-privacy-policy/index.html", import.meta.url)),
         privacy: fileURLToPath(new URL("./consciousness-privacy-policy/index.html", import.meta.url)),
       },
     },
